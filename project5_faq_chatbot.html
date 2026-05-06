@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StyleKart AI Chatbot — Project 5 | Himanshu Jangid</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f0e8;
+    --surface: #ede8dc;
+    --card: #ffffff;
+    --dark: #0f0e0b;
+    --accent1: #e63946;
+    --accent2: #2d6a4f;
+    --accent3: #f4a261;
+    --text: #0f0e0b;
+    --muted: #6b6558;
+    --border: #d4cfc4;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  /* HERO */
+  .hero {
+    background: var(--dark);
+    color: white;
+    padding: 100px 70px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .hero-dot {
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(230,57,70,0.25), transparent 70%);
+    top: -100px;
+    right: -50px;
+    pointer-events: none;
+  }
+
+  .project-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent3);
+    margin-bottom: 28px;
+    position: relative;
+  }
+
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(44px, 6vw, 80px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -2px;
+    margin-bottom: 24px;
+    position: relative;
+  }
+
+  .hero h1 .red { color: var(--accent1); }
+  .hero h1 .green { color: #52b788; }
+
+  .hero-desc {
+    font-size: 16px;
+    color: rgba(255,255,255,0.55);
+    max-width: 560px;
+    margin-bottom: 56px;
+    position: relative;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 0;
+    position: relative;
+    border: 1px solid rgba(255,255,255,0.1);
+    width: fit-content;
+  }
+
+  .stat {
+    padding: 20px 32px;
+    border-right: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .stat:last-child { border-right: none; }
+
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--accent1);
+    display: block;
+  }
+
+  .stat-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+  }
+
+  /* OVERVIEW */
+  .section {
+    padding: 80px 70px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .section h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: 36px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin-bottom: 32px;
+    line-height: 1.1;
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+
+  .three-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 24px;
+  }
+
+  p.body-text {
+    font-size: 15px;
+    color: var(--muted);
+    margin-bottom: 16px;
+    line-height: 1.8;
+  }
+
+  /* BUSINESS CARD */
+  .business-card {
+    background: var(--dark);
+    color: white;
+    padding: 36px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .business-card::before {
+    content: 'SK';
+    position: absolute;
+    right: -10px;
+    bottom: -20px;
+    font-family: 'Syne', sans-serif;
+    font-size: 120px;
+    font-weight: 800;
+    color: rgba(255,255,255,0.04);
+    line-height: 1;
+  }
+
+  .business-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--accent1);
+    margin-bottom: 6px;
+  }
+
+  .business-card .sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 24px;
+    text-transform: uppercase;
+  }
+
+  .biz-list {
+    list-style: none;
+  }
+
+  .biz-list li {
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    font-size: 13px;
+    color: rgba(255,255,255,0.6);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .biz-list li span { color: white; font-weight: 500; }
+
+  /* SYSTEM PROMPT */
+  .prompt-box {
+    background: #1a1a2e;
+    border: 1px solid #2a2a40;
+    border-left: 4px solid var(--accent1);
+    padding: 32px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: #a0a8c0;
+    line-height: 1.9;
+    white-space: pre-wrap;
+    overflow-x: auto;
+  }
+
+  .prompt-box .comment { color: #4a5568; }
+  .prompt-box .key { color: #68d391; }
+  .prompt-box .value { color: #fbd38d; }
+  .prompt-box .rule { color: #fc8181; }
+
+  /* FAQ TABLE */
+  .faq-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+  }
+
+  .faq-table th {
+    background: var(--dark);
+    color: white;
+    padding: 14px 18px;
+    text-align: left;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 400;
+  }
+
+  .faq-table td {
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--border);
+    color: var(--muted);
+    vertical-align: top;
+  }
+
+  .faq-table tr:nth-child(even) td { background: rgba(0,0,0,0.02); }
+  .faq-table tr:hover td { background: rgba(0,0,0,0.04); }
+
+  .faq-table .q-col { color: var(--text); font-weight: 500; }
+
+  .cat-badge {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 2px;
+    background: var(--surface);
+    color: var(--muted);
+  }
+
+  /* TEST SECTION */
+  .test-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 32px;
+  }
+
+  .test-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 24px;
+    position: relative;
+  }
+
+  .test-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--accent2);
+  }
+
+  .test-card h4 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: 14px;
+  }
+
+  .chat-bubble {
+    padding: 10px 14px;
+    border-radius: 4px;
+    font-size: 13px;
+    margin-bottom: 10px;
+    line-height: 1.6;
+  }
+
+  .chat-user {
+    background: var(--surface);
+    color: var(--text);
+    border-left: 3px solid var(--accent3);
+  }
+
+  .chat-bot {
+    background: #e8f5ee;
+    color: #1a4d31;
+    border-left: 3px solid var(--accent2);
+  }
+
+  .chat-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+
+  /* SCORECARD */
+  .scorecard {
+    background: var(--dark);
+    color: white;
+    padding: 48px;
+  }
+
+  .scorecard h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 26px;
+    font-weight: 800;
+    margin-bottom: 32px;
+    color: var(--accent3);
+  }
+
+  .score-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .score-label {
+    flex: 1;
+    font-size: 14px;
+    color: rgba(255,255,255,0.6);
+  }
+
+  .score-bar-wrap {
+    flex: 2;
+    height: 6px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 0;
+    overflow: hidden;
+  }
+
+  .score-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent2), #52b788);
+  }
+
+  .score-val {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: #52b788;
+    width: 40px;
+    text-align: right;
+  }
+
+  .total-row {
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 2px solid rgba(255,255,255,0.15);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .total-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    color: white;
+  }
+
+  .total-score {
+    font-family: 'Syne', sans-serif;
+    font-size: 48px;
+    font-weight: 800;
+    color: var(--accent3);
+  }
+
+  /* LEARNINGS */
+  .learning-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 28px;
+  }
+
+  .learning-card .num {
+    font-family: 'Syne', sans-serif;
+    font-size: 40px;
+    font-weight: 800;
+    color: var(--surface);
+    margin-bottom: 12px;
+    line-height: 1;
+  }
+
+  .learning-card h4 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--accent2);
+  }
+
+  .learning-card p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  /* FOOTER */
+  .footer {
+    background: var(--dark);
+    color: white;
+    padding: 48px 70px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .footer-logo {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+  }
+
+  .footer-logo span { color: var(--accent1); }
+
+  .footer-info {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 1px;
+    text-align: right;
+    line-height: 1.8;
+  }
+
+  @media (max-width: 768px) {
+    .hero, .section, .footer { padding: 40px 24px; }
+    .two-col, .three-col, .test-grid { grid-template-columns: 1fr; }
+    .hero-stats { flex-direction: column; }
+    .stat { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .scorecard { padding: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-dot"></div>
+
+  <div class="project-label">Project 05 &nbsp;/&nbsp; AI-Powered FAQ Chatbot System</div>
+  <h1>StyleKart<br><span class="red">AI</span> Support<br><span class="green">Bot</span></h1>
+  <p class="hero-desc">A fully designed, prompt-engineered AI customer service chatbot for an e-commerce fashion brand — built, tested, and documented from scratch using system prompt design principles.</p>
+
+  <div class="hero-stats">
+    <div class="stat">
+      <span class="stat-num">15</span>
+      <span class="stat-label">FAQs Covered</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">5</span>
+      <span class="stat-label">Test Types</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">39/40</span>
+      <span class="stat-label">Quality Score</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">2</span>
+      <span class="stat-label">Bot Versions</span>
+    </div>
+  </div>
+</section>
+
+<!-- OVERVIEW -->
+<section class="section">
+  <span class="section-tag">01 / Project Overview</span>
+  <h2>Why I Built This</h2>
+  <div class="two-col">
+    <div>
+      <p class="body-text">Most e-commerce brands lose customers at the support stage — not the sales stage. A poorly trained human agent who takes 4 hours to respond to "when will my order arrive?" costs more in churn than any marketing campaign can recover.</p>
+      <p class="body-text">I designed an AI-first customer support system for <strong>StyleKart</strong>, a fictional online clothing brand, to demonstrate how prompt engineering can replace repetitive Tier-1 support at scale — while maintaining a warm, brand-consistent voice.</p>
+      <p class="body-text">The bot handles 80% of common queries instantly, escalates edge cases gracefully, and operates fluently in both Hindi and English — reflecting real Indian e-commerce customer behavior.</p>
+    </div>
+    <div class="business-card">
+      <h3>StyleKart</h3>
+      <div class="sub">Online Fashion Store — India</div>
+      <ul class="biz-list">
+        <li>Delivery (Metro) <span>3–5 Business Days</span></li>
+        <li>Express Delivery <span>1–2 Days @ ₹99</span></li>
+        <li>Return Policy <span>7 Days — Free Pickup</span></li>
+        <li>COD Available <span>Up to ₹5,000</span></li>
+        <li>EMI Available <span>₹3,000+ | 3/6/9/12 months</span></li>
+        <li>Support Hours <span>WhatsApp 10AM–7PM</span></li>
+        <li>Support Email <span>support@stylekart.com</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- SYSTEM PROMPT -->
+<section class="section" style="background: var(--surface);">
+  <span class="section-tag">02 / System Prompt Design</span>
+  <h2>The Engine Behind the Bot</h2>
+  <p class="body-text" style="margin-bottom:28px; max-width:640px;">A well-designed system prompt is the difference between a generic chatbot and a brand-consistent AI agent. Below is the complete system prompt — structured into identity, knowledge, tone, and constraints.</p>
+
+  <div class="prompt-box"><span class="comment"># IDENTITY</span>
+<span class="key">NAME:</span> <span class="value">Karta</span>
+<span class="key">ROLE:</span> <span class="value">Official AI Customer Support Assistant for StyleKart</span>
+<span class="key">PERSONALITY:</span> <span class="value">Friendly, professional, solution-focused, never rude</span>
+<span class="key">LANGUAGE:</span> <span class="value">Hindi + English — match the customer's language automatically</span>
+
+<span class="comment"># KNOWLEDGE BASE — EXACT FACTS ONLY</span>
+<span class="key">Delivery Metro:</span>      <span class="value">3–5 business days</span>
+<span class="key">Delivery Other:</span>     <span class="value">5–7 business days</span>
+<span class="key">Express Delivery:</span>   <span class="value">1–2 days at ₹99 extra</span>
+<span class="key">Return Window:</span>      <span class="value">7 days | Item unused + tags attached | Free reverse pickup</span>
+<span class="key">COD:</span>                <span class="value">Available under ₹5,000 | Prepaid above</span>
+<span class="key">EMI:</span>                <span class="value">₹3,000+ | 3/6/9/12 months on HDFC, ICICI, SBI cards</span>
+<span class="key">Support:</span>            <span class="value">WhatsApp 10AM–7PM Mon–Sat | support@stylekart.com (24hr reply)</span>
+
+<span class="comment"># TONE RULES</span>
+<span class="rule">→</span> <span class="value">Short, clear answers — max 3–4 sentences</span>
+<span class="rule">→</span> <span class="value">Empathy FIRST for frustrated customers, solution SECOND</span>
+<span class="rule">→</span> <span class="value">End every response with a helpful follow-up question</span>
+<span class="rule">→</span> <span class="value">Use phrases like "Main samjha/samjhi aapki baat"</span>
+
+<span class="comment"># HARD CONSTRAINTS — NEVER VIOLATE</span>
+<span class="rule">✕</span> <span class="value">Never mention competitor brands</span>
+<span class="rule">✕</span> <span class="value">Never share personal opinions on products</span>
+<span class="rule">✕</span> <span class="value">Never request bank details or passwords</span>
+<span class="rule">✕</span> <span class="value">Out-of-scope → "Please contact support@stylekart.com"</span></div>
+</section>
+
+<!-- FAQ TABLE -->
+<section class="section">
+  <span class="section-tag">03 / FAQ Coverage</span>
+  <h2>15 Core Questions Handled</h2>
+
+  <table class="faq-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Customer Question</th>
+        <th>Bot Response Summary</th>
+        <th>Category</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td class="q-col">Delivery kitne din mein aayegi?</td><td>Metro 3–5 din, others 5–7 din. Express ₹99 mein 1–2 din.</td><td><span class="cat-badge">Delivery</span></td></tr>
+      <tr><td>2</td><td class="q-col">COD available hai?</td><td>Yes, ₹5,000 tak ke orders pe. Usse upar prepaid required.</td><td><span class="cat-badge">Payment</span></td></tr>
+      <tr><td>3</td><td class="q-col">Return policy kya hai?</td><td>7-din return, item unused + tags. Free reverse pickup.</td><td><span class="cat-badge">Returns</span></td></tr>
+      <tr><td>4</td><td class="q-col">Size kaise choose karein?</td><td>Har product pe size chart hai. WhatsApp pe bhi help milegi.</td><td><span class="cat-badge">Sizing</span></td></tr>
+      <tr><td>5</td><td class="q-col">Order track kaise karein?</td><td>Confirmation email mein tracking link hoga. Ya "My Orders" mein dekho.</td><td><span class="cat-badge">Tracking</span></td></tr>
+      <tr><td>6</td><td class="q-col">Discount code kahan lagaein?</td><td>Checkout pe "Apply Coupon" box mein type karo.</td><td><span class="cat-badge">Offers</span></td></tr>
+      <tr><td>7</td><td class="q-col">Payment fail hua, paise kat gaye?</td><td>5–7 business days mein automatically wapas. Confirmation email aayegi.</td><td><span class="cat-badge">Payment</span></td></tr>
+      <tr><td>8</td><td class="q-col">EMI option hai?</td><td>Yes! ₹3,000+ pe 3/6/9/12 months — HDFC, ICICI, SBI pe.</td><td><span class="cat-badge">Payment</span></td></tr>
+      <tr><td>9</td><td class="q-col">Gift wrapping milti hai?</td><td>Yes, checkout pe Gift Wrap option — ₹49 extra. Message bhi add kar sakte ho.</td><td><span class="cat-badge">Services</span></td></tr>
+      <tr><td>10</td><td class="q-col">Item out of stock hai?</td><td>"Notify Me" click karo — stock aane pe email/SMS milega.</td><td><span class="cat-badge">Stock</span></td></tr>
+      <tr><td>11</td><td class="q-col">Wrong item deliver hua?</td><td>48 ghante mein photos ke saath contact karo. Free replacement ya full refund.</td><td><span class="cat-badge">Complaints</span></td></tr>
+      <tr><td>12</td><td class="q-col">Bulk order discount?</td><td>₹10,000+ pe 10–15% extra. bulk@stylekart.com pe inquiry karo.</td><td><span class="cat-badge">Orders</span></td></tr>
+      <tr><td>13</td><td class="q-col">International delivery?</td><td>Abhi sirf India. UAE/UK expansion planned — newsletter subscribe karo.</td><td><span class="cat-badge">Delivery</span></td></tr>
+      <tr><td>14</td><td class="q-col">Loyalty points kaise kamayein?</td><td>Har ₹100 pe 10 points. 500 points = ₹50 discount.</td><td><span class="cat-badge">Rewards</span></td></tr>
+      <tr><td>15</td><td class="q-col">Customer care contact?</td><td>WhatsApp 10AM–7PM | support@stylekart.com | Live chat website pe.</td><td><span class="cat-badge">Support</span></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- TESTING -->
+<section class="section" style="background: var(--surface);">
+  <span class="section-tag">04 / Bot Testing — 5 Scenarios</span>
+  <h2>How the Bot Performs Under Pressure</h2>
+  <p class="body-text" style="max-width:640px; margin-bottom:0;">I tested the bot across 5 critical scenarios that reveal real-world chatbot performance. Below are representative conversation samples from each test type.</p>
+
+  <div class="test-grid">
+    <div class="test-card">
+      <h4>Normal FAQ Test</h4>
+      <div class="chat-label">Customer</div>
+      <div class="chat-bubble chat-user">Delivery kitne din mein aayegi?</div>
+      <div class="chat-label">Karta (Bot)</div>
+      <div class="chat-bubble chat-bot">Namaste! Metro cities mein delivery 3–5 business days mein hoti hai, aur baaki areas mein 5–7 din. Agar jaldi chahiye to Express Delivery option bhi hai — sirf ₹99 extra mein 1–2 din mein aayega! 😊 Kya aap apna pincode share kar sakte hain — main exact estimate bata sakta hun?</div>
+      <div style="font-size:12px; color: var(--accent2); margin-top:10px; font-family:'JetBrains Mono',monospace;">✓ Correct info · Friendly tone · Follow-up asked</div>
+    </div>
+
+    <div class="test-card">
+      <h4>Frustrated User Test</h4>
+      <div class="chat-label">Customer</div>
+      <div class="chat-bubble chat-user">Bakwas service hai! Mera return 10 din se pending hai aur koi response nahi!</div>
+      <div class="chat-label">Karta (Bot)</div>
+      <div class="chat-bubble chat-bot">Main samjha aapki baat — ye bilkul frustrating hota hai aur iske liye mujhe genuinely khed hai. 🙏 Aapka order number share karein — main is case ko priority pe escalate karta hun aur 24 ghante mein resolution ensure karunga. Aapki taklif ke liye ek baar phir maafi chahta hun.</div>
+      <div style="font-size:12px; color: var(--accent2); margin-top:10px; font-family:'JetBrains Mono',monospace;">✓ Empathy first · No defensiveness · Clear next step</div>
+    </div>
+
+    <div class="test-card">
+      <h4>Out-of-Scope Test</h4>
+      <div class="chat-label">Customer</div>
+      <div class="chat-bubble chat-user">Tumhara CEO kaun hai aur company kab bani?</div>
+      <div class="chat-label">Karta (Bot)</div>
+      <div class="chat-bubble chat-bot">Is baare mein main directly help nahi kar sakta — yeh information mere paas available nahi hai! 😊 Lekin agar aapko delivery, returns, payment, ya kisi order ke baare mein help chahiye to main poori tarah ready hun. Kya kuch aur poochna hai?</div>
+      <div style="font-size:12px; color: var(--accent2); margin-top:10px; font-family:'JetBrains Mono',monospace;">✓ Graceful decline · Stayed in scope · Redirected</div>
+    </div>
+
+    <div class="test-card">
+      <h4>Multilingual Test</h4>
+      <div class="chat-label">Customer</div>
+      <div class="chat-bubble chat-user">Return policy kya hai? In English please.</div>
+      <div class="chat-label">Karta (Bot)</div>
+      <div class="chat-bubble chat-bot">Of course! StyleKart offers a 7-day return/exchange policy. The item must be unused with original tags attached. We provide free reverse pickup — no extra charges. Just WhatsApp us within 7 days of delivery with your order details. Would you like help initiating a return?</div>
+      <div style="font-size:12px; color: var(--accent2); margin-top:10px; font-family:'JetBrains Mono',monospace;">✓ Smooth language switch · Complete information</div>
+    </div>
+
+    <div class="test-card" style="grid-column: 1 / -1;">
+      <h4>Edge Case Test — Urgent Delivery</h4>
+      <div class="chat-label">Customer</div>
+      <div class="chat-bubble chat-user">Aaj order kiya, kal ki shaadi ke liye chahiye. Ho sakta hai?</div>
+      <div class="chat-label">Karta (Bot)</div>
+      <div class="chat-bubble chat-bot">Main samjha — aur congratulations on the wedding! 🎉 Standard delivery 3–5 din mein hoti hai, lekin agar aap Express Delivery select karte hain (sirf ₹99 extra), toh metro cities mein 1–2 business days mein aa sakta hai. Kal tak guarantee dena mere liye mushkil hoga — lekin aaj hi order karo aur Express select karo, highest chance hoga. Kya main aapko Express checkout process guide karun?</div>
+      <div style="font-size:12px; color: var(--accent2); margin-top:10px; font-family:'JetBrains Mono',monospace;">✓ Honest expectation · Alternative offered · Empathetic · Actionable</div>
+    </div>
+  </div>
+</section>
+
+<!-- SCORECARD -->
+<section class="section" style="padding:0; border-bottom:none;">
+  <div class="scorecard">
+    <h3>Quality Scorecard — Version 1</h3>
+    <div class="score-row">
+      <span class="score-label">Correct information delivered</span>
+      <div class="score-bar-wrap"><div class="score-bar" style="width:100%"></div></div>
+      <span class="score-val">5/5</span>
+    </div>
+    <div class="score-row">
+      <span class="score-label">Tone: friendly & professional</span>
+      <div class="score-bar-wrap"><div class="score-bar" style="width:100%"></div></div>
+      <span class="score-val">5/5</span>
+    </div>
+    <div class="score-row">
+      <span class="score-label">Out-of-scope handling</span>
+      <div class="score-bar-wrap"><div class="score-bar" style="width:100%"></div></div>
+      <span class="score-val">5/5</span>
+    </div>
+    <div class="score-row">
+      <span class="score-label">Hindi + English fluency</span>
+      <div class="score-bar-wrap"><div class="score-bar" style="width:100%"></div></div>
+      <span class="score-val">5/5</span>
+    </div>
+    <div class="score-row">
+      <span class="score-label">Empathy for frustrated users</span>
+      <div class="score-bar-wrap"><div class="score-bar" style="width:96%"></div></div>
+      <span class="score-val">5/5</span>
+    </div>
+    <div class="score-row">
+      <span class="score-label">Helpful follow-up questions</span>
+      <div class="score-bar-wrap"><div class="score-bar" style="width:80%"></div></div>
+      <span class="score-val">4/5</span>
+    </div>
+    <div class="score-row">
+      <span class="score-label">Response conciseness</span>
+      <div class="score-bar-wrap"><div class="score-bar" style="width:100%"></div></div>
+      <span class="score-val">5/5</span>
+    </div>
+    <div class="score-row">
+      <span class="score-label">Consistent bot personality</span>
+      <div class="score-bar-wrap"><div class="score-bar" style="width:100%"></div></div>
+      <span class="score-val">5/5</span>
+    </div>
+    <div class="total-row">
+      <span class="total-label">TOTAL SCORE</span>
+      <span class="total-score">39 / 40</span>
+    </div>
+  </div>
+</section>
+
+<!-- LEARNINGS -->
+<section class="section">
+  <span class="section-tag">05 / Key Learnings</span>
+  <h2>What This Project Taught Me</h2>
+  <div class="three-col" style="margin-top:32px;">
+    <div class="learning-card">
+      <div class="num">01</div>
+      <h4>System Prompts Are Products</h4>
+      <p>A chatbot is only as good as its system prompt. Vague instructions create vague bots. Every sentence in the prompt is a design decision that affects thousands of future conversations.</p>
+    </div>
+    <div class="learning-card">
+      <div class="num">02</div>
+      <h4>Constraints Enable Creativity</h4>
+      <p>Setting hard constraints ("never mention competitors", "empathy first") actually made the bot responses more creative and useful — not less. Boundaries define identity.</p>
+    </div>
+    <div class="learning-card">
+      <div class="num">03</div>
+      <h4>Bilingual Bots Need Explicit Design</h4>
+      <p>Hindi-English code-switching doesn't happen automatically at quality. It required explicit instruction to match the customer's chosen language and maintain it consistently.</p>
+    </div>
+    <div class="learning-card">
+      <div class="num">04</div>
+      <h4>Test for Failure, Not Success</h4>
+      <p>Normal FAQ testing is easy. The frustrated user, edge case, and out-of-scope tests reveal real-world robustness. I found 3 prompt gaps through adversarial testing that didn't appear in happy-path tests.</p>
+    </div>
+    <div class="learning-card">
+      <div class="num">05</div>
+      <h4>V1 Is Never the Final Answer</h4>
+      <p>My Version 2 bot (coaching center use case) revealed how transferable — and how different — prompt engineering needs to be across industries. Core structure transfers; knowledge and tone don't.</p>
+    </div>
+    <div class="learning-card">
+      <div class="num">06</div>
+      <h4>Documentation Is Part of the Product</h4>
+      <p>Building the bot took 3 hours. Documenting it thoroughly took 4 more. A bot without documentation is a black box no team can maintain, improve, or trust.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-logo">Himanshu <span>Jangid</span></div>
+  <div class="footer-info">
+    AI GENERALIST · PROMPT ENGINEER · LLM EVALUATOR<br>
+    iamhimanshujangid@gmail.com &nbsp;|&nbsp; May 2026
+  </div>
+</footer>
+
+</body>
+</html>

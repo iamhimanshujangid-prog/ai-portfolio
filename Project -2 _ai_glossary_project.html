@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Concepts Reference — Himanshu Jangid</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0f0f0f;
+  --bg2: #1a1a1a;
+  --bg3: #242424;
+  --bg4: #2e2e2e;
+  --text: #f0f0f0;
+  --text2: #a0a0a0;
+  --text3: #666;
+  --border: rgba(255,255,255,0.08);
+  --border2: rgba(255,255,255,0.14);
+  --accent: #00d4aa;
+  --accent-bg: rgba(0,212,170,0.08);
+  --accent-border: rgba(0,212,170,0.25);
+  --blue: #4d9fff;
+  --blue-bg: rgba(77,159,255,0.08);
+  --purple: #a78bfa;
+  --purple-bg: rgba(167,139,250,0.08);
+  --amber: #fbbf24;
+  --amber-bg: rgba(251,191,36,0.08);
+  --coral: #f87171;
+  --coral-bg: rgba(248,113,113,0.08);
+  --green: #4ade80;
+  --green-bg: rgba(74,222,128,0.08);
+  --pink: #f472b6;
+  --pink-bg: rgba(244,114,182,0.08);
+  --radius: 12px;
+  --radius-sm: 8px;
+  --radius-xs: 6px;
+}
+body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+.container { max-width: 1100px; margin: 0 auto; padding: 3rem 2rem 5rem; }
+
+/* Header */
+.header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.header-left {}
+.header-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 1.5px; color: var(--accent); text-transform: uppercase; margin-bottom: 10px; }
+.header-title { font-size: 32px; font-weight: 600; color: var(--text); line-height: 1.2; margin-bottom: 8px; }
+.header-sub { font-size: 14px; color: var(--text2); line-height: 1.6; max-width: 480px; }
+.header-right { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+.author-name { font-size: 14px; font-weight: 500; color: var(--text); }
+.author-meta { font-size: 12px; color: var(--text2); text-align: right; }
+.cert-badges { display: flex; flex-direction: column; gap: 6px; margin-top: 8px; }
+.cert-badge { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text2); background: var(--bg2); border: 1px solid var(--border); border-radius: 20px; padding: 4px 10px; }
+.cert-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+
+/* Stats */
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 2rem; border: 1px solid var(--border); }
+.stat { background: var(--bg2); padding: 1.25rem 1.5rem; }
+.stat-n { font-size: 28px; font-weight: 600; color: var(--accent); letter-spacing: -1px; }
+.stat-l { font-size: 12px; color: var(--text3); margin-top: 3px; }
+
+/* Controls */
+.controls { display: flex; gap: 12px; margin-bottom: 1.5rem; flex-wrap: wrap; align-items: center; }
+.search-wrap { flex: 1; min-width: 240px; position: relative; }
+.search-wrap input {
+  width: 100%; font-family: 'Inter', sans-serif; font-size: 14px;
+  padding: 10px 14px 10px 38px;
+  border-radius: var(--radius-sm); border: 1px solid var(--border2);
+  background: var(--bg2); color: var(--text); outline: none;
+  transition: border-color .15s;
+}
+.search-wrap input::placeholder { color: var(--text3); }
+.search-wrap input:focus { border-color: var(--accent); }
+.search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text3); font-size: 14px; pointer-events: none; }
+.filters { display: flex; gap: 6px; flex-wrap: wrap; }
+.filter-btn {
+  font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 500;
+  padding: 6px 12px; border-radius: 20px;
+  border: 1px solid var(--border2); cursor: pointer;
+  background: transparent; color: var(--text2); transition: all .15s;
+  letter-spacing: .3px;
+}
+.filter-btn:hover { border-color: var(--border2); color: var(--text); background: var(--bg3); }
+.filter-btn.active { background: var(--accent-bg); color: var(--accent); border-color: var(--accent-border); }
+
+/* Count display */
+.results-meta { font-size: 12px; color: var(--text3); margin-bottom: 1rem; }
+
+/* Grid */
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 2.5rem; }
+.card { background: var(--bg2); padding: 1.25rem; cursor: pointer; transition: background .12s; position: relative; }
+.card:hover { background: var(--bg3); }
+.card.expanded { background: var(--bg3); }
+.card.expanded::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--accent); }
+.card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+.card-left { flex: 1; min-width: 0; }
+.tag { display: inline-block; font-size: 9px; font-weight: 600; padding: 2px 7px; border-radius: 4px; margin-bottom: 7px; letter-spacing: .5px; text-transform: uppercase; }
+.tag-ml { background: var(--blue-bg); color: var(--blue); border: 1px solid rgba(77,159,255,0.2); }
+.tag-dl { background: var(--purple-bg); color: var(--purple); border: 1px solid rgba(167,139,250,0.2); }
+.tag-nlp { background: var(--amber-bg); color: var(--amber); border: 1px solid rgba(251,191,36,0.2); }
+.tag-ethics { background: var(--coral-bg); color: var(--coral); border: 1px solid rgba(248,113,113,0.2); }
+.tag-general { background: var(--green-bg); color: var(--green); border: 1px solid rgba(74,222,128,0.2); }
+.tag-rl { background: var(--pink-bg); color: var(--pink); border: 1px solid rgba(244,114,182,0.2); }
+.term-en { font-size: 15px; font-weight: 600; color: var(--text); line-height: 1.3; }
+.term-hi { font-size: 12px; color: var(--text3); font-family: 'Noto Sans Devanagari', sans-serif; margin-top: 3px; }
+.toggle-icon { width: 22px; height: 22px; border-radius: 50%; background: var(--bg4); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background .12s, transform .2s; margin-top: 2px; }
+.card.expanded .toggle-icon { background: var(--accent-bg); transform: rotate(180deg); }
+.toggle-icon svg { width: 12px; height: 12px; fill: none; stroke: var(--text3); stroke-width: 2; }
+.card.expanded .toggle-icon svg { stroke: var(--accent); }
+.one-liner { font-size: 13px; color: var(--text2); margin-top: 10px; line-height: 1.55; }
+
+/* Expanded detail */
+.detail { display: none; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border); }
+.card.expanded .detail { display: block; }
+.detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+.detail-block { background: var(--bg); border-radius: var(--radius-xs); padding: 12px; border: 1px solid var(--border); }
+.detail-label { font-size: 9px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: .8px; margin-bottom: 6px; }
+.detail-text { font-size: 12px; color: var(--text2); line-height: 1.65; }
+.detail-text.hi { font-family: 'Noto Sans Devanagari', sans-serif; color: var(--text); }
+.examples-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+.example-pill { font-size: 11px; color: var(--text2); background: var(--bg); border: 1px solid var(--border2); border-radius: 4px; padding: 3px 9px; }
+.interview-block { background: var(--bg); border: 1px solid var(--accent-border); border-radius: var(--radius-xs); padding: 12px 14px; }
+.interview-label { font-size: 9px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: .8px; margin-bottom: 6px; }
+.interview-q { font-size: 12px; color: var(--text2); margin-bottom: 6px; font-style: italic; }
+.interview-a { font-size: 12px; color: var(--text); line-height: 1.65; }
+
+/* No results */
+.no-results { text-align: center; padding: 4rem; color: var(--text3); font-size: 14px; background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); }
+
+/* Hierarchy */
+.section-label { font-size: 11px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1rem; }
+.hierarchy { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem 1.75rem; margin-bottom: 2.5rem; }
+.h-row { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.h-row:last-child { margin-bottom: 0; }
+.h-indent1 { padding-left: 20px; }
+.h-indent2 { padding-left: 40px; }
+.h-indent3 { padding-left: 60px; }
+.h-arrow { font-size: 12px; color: var(--text3); flex-shrink: 0; }
+.h-box { padding: 6px 14px; border-radius: var(--radius-xs); font-size: 12px; font-weight: 500; border: 1px solid; }
+.h-ai { background: var(--green-bg); color: var(--green); border-color: rgba(74,222,128,0.2); }
+.h-ml { background: var(--blue-bg); color: var(--blue); border-color: rgba(77,159,255,0.2); }
+.h-dl { background: var(--purple-bg); color: var(--purple); border-color: rgba(167,139,250,0.2); }
+.h-llm { background: var(--amber-bg); color: var(--amber); border-color: rgba(251,191,36,0.2); }
+.h-desc { font-size: 12px; color: var(--text3); }
+
+/* Footer */
+.footer { display: flex; align-items: center; justify-content: space-between; padding-top: 2rem; border-top: 1px solid var(--border); flex-wrap: wrap; gap: 12px; }
+.footer-left .name { font-size: 14px; font-weight: 500; color: var(--text); }
+.footer-left .role { font-size: 12px; color: var(--text3); margin-top: 3px; }
+.footer-right { display: flex; gap: 8px; }
+.footer-tag { font-size: 11px; color: var(--text3); background: var(--bg2); border: 1px solid var(--border); border-radius: 4px; padding: 4px 10px; }
+
+@media (max-width: 700px) {
+  .stats { grid-template-columns: repeat(2, 1fr); }
+  .grid { grid-template-columns: 1fr; }
+  .header { flex-direction: column; gap: 1.5rem; }
+  .header-right { align-items: flex-start; }
+  .detail-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <div class="header-left">
+      <div class="header-eyebrow">AI Reference Document</div>
+      <div class="header-title">AI Concepts Glossary</div>
+      <div class="header-sub">20 core AI/ML concepts — bilingual reference with real-world applications and interview frameworks. Built for practitioners working in LLM evaluation and AI systems.</div>
+    </div>
+    <div class="header-right">
+      <div class="author-name">Himanshu Jangid</div>
+      <div class="author-meta">AI Trainer &amp; LLM Evaluator</div>
+      <div class="cert-badges">
+        <div class="cert-badge"><div class="cert-dot"></div>IBM AI Fundamentals — Certified</div>
+        <div class="cert-badge"><div class="cert-dot"></div>Microsoft Azure AI — Certified</div>
+        <div class="cert-badge"><div class="cert-dot"></div>TELUS · LLM Evaluation · 1 Year</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="stat-n">20</div><div class="stat-l">Concepts Covered</div></div>
+    <div class="stat"><div class="stat-n">6</div><div class="stat-l">Topic Categories</div></div>
+    <div class="stat"><div class="stat-n">EN+HI</div><div class="stat-l">Bilingual</div></div>
+    <div class="stat"><div class="stat-n">20</div><div class="stat-l">Interview Q&amp;A</div></div>
+  </div>
+
+  <div class="controls">
+    <div class="search-wrap">
+      <span class="search-icon">⌕</span>
+      <input type="text" id="searchInput" placeholder="Search concepts... (hallucination, RLHF, transformer, RAG)" oninput="filterCards()">
+    </div>
+    <div class="filters">
+      <button class="filter-btn active" onclick="setFilter('all',this)">All</button>
+      <button class="filter-btn" onclick="setFilter('general',this)">General AI</button>
+      <button class="filter-btn" onclick="setFilter('ml',this)">Machine Learning</button>
+      <button class="filter-btn" onclick="setFilter('dl',this)">Deep Learning</button>
+      <button class="filter-btn" onclick="setFilter('nlp',this)">NLP / LLM</button>
+      <button class="filter-btn" onclick="setFilter('ethics',this)">AI Ethics</button>
+      <button class="filter-btn" onclick="setFilter('rl',this)">RL / Evaluation</button>
+    </div>
+  </div>
+
+  <div class="results-meta" id="resultsMeta">Showing all 20 concepts</div>
+  <div class="grid" id="glossaryGrid"></div>
+  <div id="noResults" class="no-results" style="display:none">No matching concepts found. Try a different search term.</div>
+
+  <div class="section-label">Concept Hierarchy</div>
+  <div class="hierarchy">
+    <div class="h-row"><div class="h-box h-ai">AI — Artificial Intelligence</div><div class="h-desc">Broadest umbrella. Any machine that mimics human cognitive functions.</div></div>
+    <div class="h-row h-indent1"><div class="h-arrow">↳</div><div class="h-box h-ml">ML — Machine Learning</div><div class="h-desc">Learns patterns from data. No explicit rules written by humans.</div></div>
+    <div class="h-row h-indent2"><div class="h-arrow">↳</div><div class="h-box h-dl">DL — Deep Learning</div><div class="h-desc">Layered neural networks. Powers image, speech &amp; language AI.</div></div>
+    <div class="h-row h-indent3"><div class="h-arrow">↳</div><div class="h-box h-llm">LLM — Large Language Model</div><div class="h-desc">GPT-4, Claude, Gemini. Transformer-based. Trained on massive text corpora.</div></div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-left">
+      <div class="name">Himanshu Jangid</div>
+      <div class="role">AI Trainer &nbsp;·&nbsp; LLM Evaluator &nbsp;·&nbsp; Prompt Engineer</div>
+    </div>
+    <div class="footer-right">
+      <span class="footer-tag">IBM Certified</span>
+      <span class="footer-tag">Microsoft AI</span>
+      <span class="footer-tag">TELUS · 1yr LLM Exp</span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const terms = [
+  {
+    en:"Artificial Intelligence (AI)", hi:"कृत्रिम बुद्धिमत्ता",
+    cat:"general", tag:"tag-general", tagLabel:"General AI",
+    one:"The science of building systems that simulate human intelligence — reasoning, learning, and decision-making.",
+    hindi:"AI matlab kisi bhi machine ya software ko itna capable banana ki wo insaanon ki tarah soch sake, seekh sake aur decisions le sake. ML, DL, NLP — sab iske subfields hain.",
+    english:"Artificial Intelligence is the broad discipline of creating machines capable of performing tasks that typically require human intelligence — including perception, reasoning, language understanding, and planning.",
+    examples:["Google Maps real-time routing","Gmail spam detection","Face ID biometric unlock"],
+    iq:"AI ko simply define karo aur ek practical example do.",
+    ia:"AI matlab machines ko human-like cognitive ability dena. Iska best practical example Google Maps hai — traffic, accidents, road closures sab real-time process karke best route suggest karta hai bina explicitly program kiye. Ye AI ka decision-making hai."
+  },
+  {
+    en:"Machine Learning (ML)", hi:"मशीन लर्निंग",
+    cat:"ml", tag:"tag-ml", tagLabel:"Machine Learning",
+    one:"A subset of AI where models learn patterns from data — no hand-written rules, the algorithm figures it out.",
+    hindi:"ML mein hum machine ko rules nahi batate. Data dete hain, machine khud patterns dhundti hai. Spam filter ka example — hum nahi batate 'ye spam hai', machine lakho emails se khud seekhti hai ki spam kaisa dikhta hai.",
+    english:"Machine Learning is a subset of AI that enables systems to automatically learn and improve from experience without being explicitly programmed — using statistical methods to build predictive models from data.",
+    examples:["Netflix content recommendations","Bank loan approval models","Email spam classification"],
+    iq:"Traditional programming aur ML mein core difference kya hai?",
+    ia:"Traditional programming mein hum rules likhte hain: 'IF sender unknown AND subject has FREE MONEY THEN spam'. ML mein hum model ko 1 million labeled emails dete hain — model khud rules learn karta hai. Jab email patterns change hote hain, ML model adapt kar sakta hai; traditional rules nahi."
+  },
+  {
+    en:"Deep Learning (DL)", hi:"डीप लर्निंग",
+    cat:"dl", tag:"tag-dl", tagLabel:"Deep Learning",
+    one:"ML with multi-layered neural networks — each layer extracts increasingly abstract features from raw data.",
+    hindi:"Deep Learning mein bahut saari layers hoti hain, isliye 'deep'. Pehli layer raw pixels ya characters dekhi, agle layer edges aur patterns, aur end mein object ya meaning. ChatGPT aur image recognition isi pe chalta hai.",
+    english:"Deep Learning uses artificial neural networks with many hidden layers to learn hierarchical representations of data — enabling breakthroughs in computer vision, speech recognition, and natural language processing.",
+    examples:["ChatGPT / Claude text generation","Google Photos face recognition","MRI tumor detection"],
+    iq:"DL ko 'deep' kyun kehte hain — kya deeper hota hai?",
+    ia:"Layers. Ek basic ML model mein ek ya do layers hoti hain. Deep learning mein dozens ya hundreds. Har layer previous layer ka output process karti hai — pehle simple features (edges), phir complex (faces, words). Ye hierarchical feature extraction hai jo DL ko itna powerful banata hai."
+  },
+  {
+    en:"Neural Network", hi:"न्यूरल नेटवर्क",
+    cat:"dl", tag:"tag-dl", tagLabel:"Deep Learning",
+    one:"Computational graph of interconnected nodes (neurons) organized in layers — loosely inspired by the human brain.",
+    hindi:"Neural network ek manufacturing pipeline ki tarah sochो — input layer mein raw data aata hai, hidden layers mein processing hoti hai (har node kuch signals le ke output deta hai), aur output layer final answer deti hai.",
+    english:"A neural network is a mathematical model consisting of layers of nodes (artificial neurons) where each node receives inputs, applies a weight and activation function, and passes output to the next layer.",
+    examples:["CNNs for image classification","RNNs for sequence data","Transformers for language"],
+    iq:"Activation function ka kya role hota hai neural network mein?",
+    ia:"Activation function decide karta hai ki ek neuron 'fire' karega ya nahi — exactly jaise biological neurons. Bina activation function ke network sirf linear transformations kar sakta tha — koi bhi complex non-linear pattern nahi seekh sakta tha. ReLU, sigmoid, softmax — ye non-linearity introduce karte hain jo real-world data ke liye zaruri hai."
+  },
+  {
+    en:"Supervised Learning", hi:"सुपरवाइज़्ड लर्निंग",
+    cat:"ml", tag:"tag-ml", tagLabel:"Machine Learning",
+    one:"Training on labeled input-output pairs — the model learns to map inputs to correct outputs using known ground truth.",
+    hindi:"Supervised learning mein training data mein har input ke saath correct answer (label) hota hai. Model in examples se learn karta hai. House price prediction — we give: '3BHK, Jaipur, 1200sqft → Rs.45L'. Model itne examples se pattern seekhta hai.",
+    english:"Supervised learning trains a model on a dataset where each input has a corresponding correct label. The model minimizes prediction error (loss) over training iterations until it generalizes well to unseen data.",
+    examples:["House price regression","Medical image diagnosis","Fraud detection (labeled transactions)"],
+    iq:"Supervised aur unsupervised approach kab choose karein — decision criteria kya hai?",
+    ia:"Agar labeled data available hai aur output clearly defined hai — supervised. Agar explore karna hai ki data mein kya patterns hain, ya labeling infeasible hai — unsupervised. Example: customer churn prediction mein labels hain (churned/not churned) → supervised. Naye market mein customer segmentation → no labels → unsupervised clustering."
+  },
+  {
+    en:"Unsupervised Learning", hi:"अनसुपरवाइज़्ड लर्निंग",
+    cat:"ml", tag:"tag-ml", tagLabel:"Machine Learning",
+    one:"Finding hidden structure in unlabeled data — the model discovers clusters, patterns, or representations on its own.",
+    hindi:"Unsupervised learning mein koi answer sheet nahi hoti. Model khud data mein structure dhundta hai. Amazon ka recommendation engine isi se customer groups banata hai — 'ye log budget shoppers hain, ye premium'. Hum classify nahi karte, model karta hai.",
+    english:"Unsupervised learning involves training on data without labels, where the algorithm identifies inherent structure — through clustering (K-means, DBSCAN), dimensionality reduction (PCA, t-SNE), or generative modeling.",
+    examples:["Customer segmentation (K-means)","Topic modeling in news (LDA)","Anomaly detection in logs"],
+    iq:"Unsupervised learning ka real production use case batao.",
+    ia:"E-commerce mein customer segmentation — koi predefined categories nahi hoti. K-means clustering chalaao 1M users pe: cluster 1 nikalta hai 'late-night mobile shoppers', cluster 2 'weekend bulk buyers', cluster 3 'discount-only users'. Ab marketing team inhe alag campaigns se target karti hai. Zero labels, maximum business value."
+  },
+  {
+    en:"Reinforcement Learning & RLHF", hi:"रिइन्फोर्समेंट लर्निंग और RLHF",
+    cat:"rl", tag:"tag-rl", tagLabel:"RL / Evaluation",
+    one:"An agent learns by acting in an environment and receiving reward signals — RLHF extends this with human preference feedback.",
+    hindi:"RL mein ek agent environment mein actions karta hai — sahi action pe reward, galat pe penalty. RLHF (Reinforcement Learning from Human Feedback) mein humans AI outputs rate karte hain. Yahi kaam main TELUS mein karta tha — model outputs evaluate karna taaki better training signals mil sakein.",
+    english:"Reinforcement Learning trains an agent via trial-and-error with reward signals. RLHF extends this to align LLMs with human preferences — human raters compare model outputs, their preferences train a reward model, which guides further fine-tuning (PPO algorithm).",
+    examples:["AlphaGo beating world champion","ChatGPT alignment via RLHF","Self-driving car policy training"],
+    iq:"RLHF pipeline explain karo — LLM alignment mein kaisa use hota hai?",
+    ia:"RLHF 3 steps mein hota hai. Pehla: supervised fine-tuning on demonstration data. Doosra: human raters 2 model outputs compare karte hain — kaunsa better hai aur kyun — isse reward model train hota hai. Teesra: original LLM ko PPO algorithm se fine-tune karte hain taaki reward model ki rating maximize ho. TELUS mein main step 2 karta tha — structured evaluation criteria use karke outputs rate karna."
+  },
+  {
+    en:"Large Language Model (LLM)", hi:"लार्ज लैंग्वेज मॉडल",
+    cat:"nlp", tag:"tag-nlp", tagLabel:"NLP / LLM",
+    one:"Transformer-based models trained on massive text corpora that can understand and generate human language at scale.",
+    hindi:"LLM ek bahut bada neural network hai — billions of parameters — jo internet-scale text pe trained hai. Ye 'next token prediction' ka masterclass hai. GPT-4, Claude, Gemini sab isi category mein hain. 'Large' matlab parameters nahi sirf — training data aur compute bhi.",
+    english:"Large Language Models are transformer-based neural networks with billions of parameters, pre-trained on internet-scale text via next-token prediction. They can be instruction-tuned and RLHF-aligned for downstream tasks.",
+    examples:["GPT-4 (OpenAI)","Claude 3.5 Sonnet (Anthropic)","Gemini Ultra (Google)"],
+    iq:"LLM 'intelligence' kaise demonstrate karta hai — actual understanding hai ya pattern matching?",
+    ia:"Ye debate ongoing hai, lekin practically: LLMs statistical patterns ko itni high fidelity se learn karte hain ki emergent reasoning capabilities dikhai deti hain — chain-of-thought, analogical reasoning, code generation. Ye 'true understanding' nahi ho sakta, lekin task performance pe often expert-human level pe hai. LLM evaluation mein yahi nuance judge karna important hai."
+  },
+  {
+    en:"Tokenization", hi:"टोकनाइज़ेशन",
+    cat:"nlp", tag:"tag-nlp", tagLabel:"NLP / LLM",
+    one:"The process of converting raw text into tokens (subword units) that a model processes as numerical IDs.",
+    hindi:"LLM directly text nahi padhte. Pehle Byte Pair Encoding (BPE) ya similar algorithm se text ko tokens mein todte hain. 'ChatGPT' ek token ho sakta hai, 'Himanshu' 2-3 tokens. Isliye 'token limits' hoti hain, word limits nahi. English mein ~1 token ≈ 0.75 words.",
+    english:"Tokenization splits text into subword units using algorithms like Byte Pair Encoding (BPE) or SentencePiece. Each token maps to a unique integer ID fed into the model's embedding layer. Context window limits are measured in tokens, not words.",
+    examples:["GPT-4: 128K token context window","'Unbelievable' → ['Un','believ','able']","Hindi text uses more tokens than English"],
+    iq:"Tokenization ki limitations kya hain — real-world impact kya hota hai?",
+    ia:"Teeno major issues hain. Pehla: rare words ya names multiple tokens mein split ho jaate hain — 'Rajasthan' 3 tokens tha GPT-3 mein, spelling mistakes ke chances zyada. Doosra: non-English languages mein zyada tokens lagte hain same content ke liye — effectively shorter context window. Teesra: arithmetic mein numbers digit-by-digit tokenize hote hain — isliye LLMs basic math pe struggle karte hain."
+  },
+  {
+    en:"Embeddings", hi:"एम्बेडिंग्स",
+    cat:"nlp", tag:"tag-nlp", tagLabel:"NLP / LLM",
+    one:"Dense vector representations of tokens/sentences that encode semantic meaning in high-dimensional space.",
+    hindi:"Embedding matlab meaning ko numbers ki list mein convert karna. 'King' ka vector 'Queen' ke paas hoga, 'car' ke door. Famous equation: King - Man + Woman ≈ Queen — sirf numbers ke operations se semantic meaning nikal aayi. RAG, semantic search, recommendations — sab embeddings pe chalte hain.",
+    english:"Embeddings map discrete tokens to continuous vector spaces where semantic relationships are preserved geometrically. Cosine similarity between embeddings measures semantic closeness — the foundation of semantic search, RAG, and recommendation systems.",
+    examples:["OpenAI text-embedding-3-large","Sentence transformers for RAG","Word2Vec semantic arithmetic"],
+    iq:"Embeddings RAG mein kaisa use hote hain — workflow batao.",
+    ia:"RAG pipeline: documents ko chunks mein todte hain, har chunk ka embedding generate karte hain, vector database mein store karte hain (Pinecone, Chroma). Query aane pe — query ka bhi embedding banao, vector DB mein nearest neighbors dhundo (cosine similarity), top-k relevant chunks retrieve karo, LLM ke context mein deke answer generate karo. Ye hallucination kam karta hai kyunki model grounded facts use karta hai."
+  },
+  {
+    en:"Hallucination", hi:"हेल्युसिनेशन",
+    cat:"ethics", tag:"tag-ethics", tagLabel:"AI Ethics",
+    one:"When an LLM generates factually incorrect, fabricated, or unsupported content — stated with confident fluency.",
+    hindi:"Hallucination ek critical problem hai — model confidently galat bol deta hai, aur fluency ki wajah se user ko detect karna mushkil hota hai. Fake court cases, wrong citations, made-up statistics — sab real-world examples hain. LLM evaluation ka core skill hai isse identify karna.",
+    english:"LLM hallucination occurs when a model generates content that is factually wrong, internally inconsistent, or unsupported by its training data or context — while maintaining confident, fluent output. Types include factual, temporal, and entity hallucinations.",
+    examples:["Lawyers citing non-existent cases (GPT)","Wrong drug dosages in medical AI","Fabricated research paper citations"],
+    iq:"Hallucination kyun hota hai — aur evaluator isse kaise detect karta hai?",
+    ia:"Root cause: LLMs probability pe predict karte hain — next most-likely token — truth ke liye explicitly optimize nahi kiya. Confident galat bol deta hai kyunki fluent text ki probability high hoti hai. Detection ke liye main 3 checks karta hun: factual claims ko external source se verify karna, internal consistency check (document ke andar contradictions), aur specificity mismatch — jab model bina source ke bahut specific numbers ya names deta hai, hallucination ka strong signal hai."
+  },
+  {
+    en:"AI Bias", hi:"AI पूर्वाग्रह",
+    cat:"ethics", tag:"tag-ethics", tagLabel:"AI Ethics",
+    one:"Systematic, unfair outputs caused by skewed training data, historical prejudices, or flawed evaluation criteria.",
+    hindi:"Amazon hiring AI women ko reject karta tha — kyunki training data (past hiring records) mein mostly men the. Model ne historical pattern seekha, discrimination nahi seekhi — lekin effect same tha. Bias sirf data mein nahi hota — evaluation metrics mein bhi ho sakta hai.",
+    english:"AI bias manifests when models systematically produce outputs that unfairly disadvantage groups based on race, gender, age, or other protected characteristics — stemming from training data imbalance, label bias, or feedback loop amplification.",
+    examples:["Amazon hiring AI (gender bias)","COMPAS recidivism tool (racial bias)","Facial recognition accuracy gap"],
+    iq:"LLM evaluation mein bias detect karne ka approach kya hota hai?",
+    ia:"Main counterfactual testing use karta hun — same prompt mein sirf demographic details change karo (male/female, Indian/American name) aur outputs compare karo. Agar responses materially different hain without justification — bias signal hai. Dusra approach: stereotype completion tasks — model ko incomplete sentences deke dekho ki wo stereotypical direction mein jaata hai ya neutral rehta hai. Ye outputs then flag karke annotate karta hun."
+  },
+  {
+    en:"Overfitting", hi:"ओवरफिटिंग",
+    cat:"ml", tag:"tag-ml", tagLabel:"Machine Learning",
+    one:"When a model memorizes training data too precisely and fails to generalize to new, unseen examples.",
+    hindi:"Overfitting matlab model ne training examples ko ratta maar liya — samjha nahi generalize. Training pe 99% accuracy, test pe 62% — classic overfitting. Ek student jo sirf previous year papers yaad kare, naye questions fail kare — same concept.",
+    english:"Overfitting occurs when a model's complexity exceeds what the data can support — it learns noise and specific training patterns rather than generalizable signal. Detected by large gap between training and validation loss.",
+    examples:["99% train / 62% test accuracy","Decision tree memorizing training points","Polynomial regression through all points"],
+    iq:"Overfitting rokne ke liye kaunse concrete techniques use karte hain?",
+    ia:"Teeen main techniques: Regularization (L1/L2 — model weights penalize karo taaki simpler solutions prefer ho), Dropout (training mein randomly neurons off karo — ensemble effect create hota hai), aur Early Stopping (validation loss increase hone pe training rok do). Dataset side pe: Data Augmentation aur Cross-validation. LLM fine-tuning mein overfitting zyada common hai kyunki task-specific data usually chhota hota hai."
+  },
+  {
+    en:"Prompt Engineering", hi:"प्रॉम्प्ट इंजीनियरिंग",
+    cat:"nlp", tag:"tag-nlp", tagLabel:"NLP / LLM",
+    one:"The systematic practice of designing, iterating, and optimizing inputs to LLMs to reliably elicit desired outputs.",
+    hindi:"Prompt engineering ek skill hai jo surface pe simple lagti hai — lekin depth mein bahut complex hai. Same model, alag prompt se dramatically alag outputs. Zero-shot, few-shot, chain-of-thought, system prompt design, role prompting — sab alag techniques hain alag use cases ke liye.",
+    english:"Prompt engineering involves crafting model inputs — including system prompts, user messages, examples, and instruction framing — to reliably guide LLM behavior. Advanced techniques include chain-of-thought, ReAct, tree-of-thoughts, and constitutional AI prompting.",
+    examples:["Chain-of-thought: 'Let's think step by step'","Few-shot with 3 labeled examples","System prompt for persona/constraints"],
+    iq:"Prompt engineering ka most impactful technique kaunsa hai aur kyun?",
+    ia:"Chain-of-thought prompting — specifically 'Let's think step by step' ya explicit reasoning steps force karna. Research (Wei et al. 2022) ne show kiya ki CoT reasoning LLM accuracy ko complex multi-step problems pe dramatically improve karta hai. Intuition: model ko intermediate steps generate karne pe force karna attention ko right information pe anchor karta hai. LLM evaluation mein main specifically CoT reasoning quality assess karta hun — weak CoT strong predictor hai galat final answer ka."
+  },
+  {
+    en:"Transformer Architecture", hi:"ट्रांसफॉर्मर आर्किटेक्चर",
+    cat:"dl", tag:"tag-dl", tagLabel:"Deep Learning",
+    one:"The dominant deep learning architecture powering all modern LLMs — based on self-attention mechanisms.",
+    hindi:"2017 mein Google ka 'Attention is All You Need' paper aaya — isse transformers aaye. Pehle RNNs the jo sequential processing karte the aur long-range dependencies bhool jaate the. Transformer mein self-attention mechanism hai jo poori sequence ek saath dekh sakta hai — isi liye ChatGPT 100K word context yaad rakh sakta hai.",
+    english:"The Transformer architecture (Vaswani et al., 2017) uses multi-head self-attention to compute relationships between all tokens in parallel — overcoming RNN limitations with long sequences. Encoder-decoder for translation, decoder-only (GPT) for generation, encoder-only (BERT) for understanding.",
+    examples:["GPT-4: decoder-only transformer","BERT: encoder-only for classification","T5: encoder-decoder for translation"],
+    iq:"Self-attention mechanism kaise kaam karta hai — intuition explain karo.",
+    ia:"Self-attention mein har token ke liye 3 vectors compute hote hain: Query (main kya dhundh raha hun), Key (main kyse describe hoon), Value (meri actual information). Attention score = dot product of Query with all Keys — basically: 'ye token kitna relevant hai mere current token ke liye?'. Softmax apply karo to get weights, Values ko weight-average karo — final representation milta hai. Isse 'The bank can guarantee deposits' mein 'bank' automatically 'deposits' se attend karta hai, 'river' se nahi."
+  },
+  {
+    en:"Fine-tuning", hi:"फाइन-ट्यूनिंग",
+    cat:"ml", tag:"tag-ml", tagLabel:"Machine Learning",
+    one:"Adapting a pre-trained foundation model to a specific domain or task by further training on targeted data.",
+    hindi:"Foundation model pehle se general knowledge rakhta hai. Fine-tuning mein hum usi model ko specific task ke liye aur train karte hain — thoda data, thodi compute. Medical chatbot ke liye GPT-4 fine-tune karo medical literature pe. Base knowledge rehti hai, domain expertise add hoti hai.",
+    english:"Fine-tuning updates a pre-trained model's weights on a smaller, task-specific dataset. Full fine-tuning is compute-intensive; PEFT methods (LoRA, prefix tuning) update only a fraction of parameters — making fine-tuning accessible at smaller scale.",
+    examples:["Code Llama (code-specialized)","Medical LLaMA on clinical notes","Customer service bot fine-tuning"],
+    iq:"Fine-tuning vs RAG — kab kaunsa choose karo?",
+    ia:"RAG choose karo jab knowledge frequently update hoti hai, facts verifiable chahiye, aur hallucination risk high hai. Fine-tuning choose karo jab specific style, tone ya format chahiye jo prompting se nahi milta, ya latency critical hai (RAG retrieval step add karta hai). Practically: medical factual Q&A → RAG (latest guidelines). Legal document drafting style → fine-tuning. Dono combine bhi karte hain production systems mein."
+  },
+  {
+    en:"RAG — Retrieval Augmented Generation", hi:"रिट्रीवल ऑगमेंटेड जनरेशन",
+    cat:"nlp", tag:"tag-nlp", tagLabel:"NLP / LLM",
+    one:"Grounding LLM generation with dynamically retrieved relevant documents — reducing hallucination and enabling current knowledge.",
+    hindi:"LLM ka training cutoff hota hai — naya data nahi jaanta. RAG mein query aane pe relevant documents real-time retrieve karo, LLM ke context mein do, phir generate karo. Company policy bot, legal research tool, medical AI — sab RAG pe chal sakte hain. Answers traceable hote hain source tak.",
+    english:"RAG pipelines combine a vector retrieval system with a generative LLM: documents are chunked, embedded, and stored in a vector DB; at inference time, the query is embedded, nearest chunks retrieved, and fed as context to the LLM alongside the question.",
+    examples:["Perplexity AI (web-grounded answers)","Enterprise knowledge base chatbots","Clinical decision support systems"],
+    iq:"RAG pipeline mein kaunse failure points hote hain?",
+    ia:"Teeen major failure points: Chunking strategy — agar chunks too large hain, irrelevant content dilude relevant. Too small, context fragmented. Embedding quality — weak embeddings miss semantic similarity; retrieval garbage in, generation garbage out. LLM faithfulness — model retrieved context ignore karke hallucinate kar sakta hai. Mitigation: hybrid search (dense + sparse/BM25), re-ranking retrieved chunks, aur faithfulness evaluation (does the answer actually come from retrieved context?)."
+  },
+  {
+    en:"Computer Vision", hi:"कंप्यूटर विज़न",
+    cat:"general", tag:"tag-general", tagLabel:"General AI",
+    one:"The AI field enabling machines to interpret, classify, and extract meaning from images and video.",
+    hindi:"Computer Vision se machines visual world samajhti hain. CNN isi ke liye bana — pixels se edges, edges se shapes, shapes se objects. Face unlock (classification), tumor detection (segmentation), self-driving (object detection + tracking) — sab CV ke real applications hain.",
+    english:"Computer Vision uses CNNs, Vision Transformers (ViT), and diffusion models to perform tasks including image classification, object detection (YOLO, Faster R-CNN), semantic segmentation, and image generation — with applications across healthcare, automotive, and manufacturing.",
+    examples:["Tesla Autopilot (object detection)","Google Lens (visual search)","Chest X-ray AI (CheXNet)"],
+    iq:"CNN aur Vision Transformer mein fundamental difference kya hai?",
+    ia:"CNN local features pe focus karta hai — convolutional filters image ke small patches scan karte hain, hierarchically combine karte hain. ViT (Vision Transformer) image ko patches mein split karta hai aur unhe tokens ki tarah treat karta hai — phir self-attention apply karta hai poore image pe. CNN inductive bias rakhta hai (locality, translation invariance) jo small data pe achha hai. ViT more data aur compute pe CNN se better perform karta hai, aur multi-modal models (CLIP, GPT-4V) ViT architecture use karte hain."
+  },
+  {
+    en:"NLP — Natural Language Processing", hi:"नेचुरल लैंग्वेज प्रोसेसिंग",
+    cat:"general", tag:"tag-general", tagLabel:"General AI",
+    one:"The AI discipline enabling machines to understand, process, and generate human language in text or speech form.",
+    hindi:"NLP se machines text aur voice samajhti hain. Classical NLP mein rule-based systems the — regex, POS tagging. Modern NLP transformer-based hai — BERT, GPT. Intent detection, entity extraction, sentiment analysis, summarization, translation — sab NLP tasks hain.",
+    english:"NLP spans classical approaches (TF-IDF, POS tagging, named entity recognition) and modern transformer-based methods. Core tasks include text classification, summarization, translation, QA, and dialogue systems — with LLMs now achieving near-human performance on most NLP benchmarks.",
+    examples:["Google Translate (seq2seq)","Amazon Alexa (intent + entity)","Grammarly (grammar correction)"],
+    iq:"Classical NLP aur LLM-based NLP ke tradeoffs kya hain?",
+    ia:"Classical NLP (TF-IDF, rule-based systems) interpret karne mein easy hai, compute cheap hai, aur small data pe kaam karta hai. Lekin manually engineered features pe dependent hai — naye domains pe breaks. LLM-based NLP zero-shot ya few-shot kaam karta hai, complex tasks handle karta hai, lekin: expensive, latency zyada, interpretability kam. Production mein, simple classification tasks ke liye lightweight classical models better ROI dete hain. LLMs reserved hote hain complex generation ya reasoning ke liye."
+  },
+  {
+    en:"Explainability (XAI)", hi:"एक्सप्लेनेबिलिटी",
+    cat:"general", tag:"tag-general", tagLabel:"General AI",
+    one:"The capability of AI systems to provide understandable, auditable justifications for their outputs and decisions.",
+    hindi:"Black box AI regulated industries mein accept nahi hota. Doctor ko batana zaroori hai 'kyun cancer diagnose kiya'. Bank loan reject karne ka reason legally required hai. IBM ke AI Ethics mein Explainability ek core pillar hai — aur LLM evaluation mein reasoning quality assess karna isi ka part hai.",
+    english:"XAI encompasses post-hoc explanation methods (SHAP, LIME, attention visualization) and inherently interpretable models (decision trees, linear regression). For LLMs, chain-of-thought reasoning is a form of self-explanation — making the model's reasoning process auditable.",
+    examples:["SHAP values for credit decisions","LIME for medical image AI","CoT reasoning as self-explanation"],
+    iq:"LLM evaluation mein explainability kaise assess karte ho?",
+    ia:"Main chain-of-thought quality evaluate karta hun. Strong explainability: model step-by-step reasoning show karta hai, har claim justified hai, conclusion logically follows. Weak explainability: model answer deta hai bina reasoning ke, ya reasoning circular/irrelevant hai. RLHF evaluation mein specifically reasoning quality aur factual grounding rate karna hallucination prevention se directly linked hai — explained answers zyada verifiable hote hain."
+  },
+  {
+    en:"Model Parameters & Scale", hi:"मॉडल पैरामीटर्स",
+    cat:"general", tag:"tag-general", tagLabel:"General AI",
+    one:"Learnable weights in a neural network — parameter count roughly correlates with model capacity and capability.",
+    hindi:"Parameters wo numbers hain jo training mein optimize hote hain. GPT-3: 175B parameters. GPT-4: reportedly 1T+. Zyada parameters = zyada capacity = zyada compute chahiye. Scaling laws predict karte hain: performance predictably improve hoti hai compute, data, aur parameters increase karne pe.",
+    english:"Neural network parameters (weights and biases) are adjusted during training to minimize loss. Scaling laws (Kaplan et al., Chinchilla) show that model performance improves predictably with parameter count, training data, and compute — guiding decisions on model size vs training budget.",
+    examples:["GPT-3: 175B parameters","Llama 3 70B (open source)","Chinchilla optimal: 70B params / 1.4T tokens"],
+    iq:"'More parameters = better model' — ye assumption kyun wrong hai?",
+    ia:"Chinchilla paper (DeepMind, 2022) ne show kiya ki GPT-3 significantly undertrained tha for its parameter count. Optimal training requires compute budget ko equally split karna model size aur training tokens mein. 70B model pe 1.4T tokens train karna 175B model pe 300B tokens se better perform karta hai — same compute budget pe. Isi liye Llama 2 70B ne GPT-3.5 ko kaafi tasks pe match kiya. Parameters ek dimension hai; data quality aur training compute equally critical hain."
+  }
+];
+
+let activeFilter = 'all';
+let searchTerm = '';
+
+function setFilter(cat, btn) {
+  activeFilter = cat;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderCards();
+}
+
+function filterCards() {
+  searchTerm = document.getElementById('searchInput').value.toLowerCase();
+  renderCards();
+}
+
+function toggleCard(idx) {
+  const card = document.getElementById('card-' + idx);
+  card.classList.toggle('expanded');
+}
+
+function renderCards() {
+  const grid = document.getElementById('glossaryGrid');
+  const noResults = document.getElementById('noResults');
+  const meta = document.getElementById('resultsMeta');
+
+  const filtered = terms.map((t, i) => ({...t, origIdx: i})).filter(t => {
+    const matchCat = activeFilter === 'all' || t.cat === activeFilter;
+    const matchSearch = !searchTerm ||
+      t.en.toLowerCase().includes(searchTerm) ||
+      t.hi.includes(searchTerm) ||
+      t.one.toLowerCase().includes(searchTerm) ||
+      t.tagLabel.toLowerCase().includes(searchTerm) ||
+      (t.iq && t.iq.toLowerCase().includes(searchTerm));
+    return matchCat && matchSearch;
+  });
+
+  if (filtered.length === 0) {
+    grid.innerHTML = '';
+    noResults.style.display = 'block';
+    meta.textContent = 'No results found';
+    return;
+  }
+  noResults.style.display = 'none';
+  meta.textContent = `Showing ${filtered.length} of ${terms.length} concepts`;
+
+  grid.innerHTML = filtered.map(t => `
+    <div class="card" id="card-${t.origIdx}" onclick="toggleCard(${t.origIdx})">
+      <div class="card-header">
+        <div class="card-left">
+          <div><span class="tag ${t.tag}">${t.tagLabel}</span></div>
+          <div class="term-en">${t.en}</div>
+          <div class="term-hi">${t.hi}</div>
+        </div>
+        <div class="toggle-icon">
+          <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+      </div>
+      <div class="one-liner">${t.one}</div>
+      <div class="detail">
+        <div class="detail-grid">
+          <div class="detail-block">
+            <div class="detail-label">Hindi Explanation</div>
+            <div class="detail-text hi">${t.hindi}</div>
+          </div>
+          <div class="detail-block">
+            <div class="detail-label">Technical Definition</div>
+            <div class="detail-text">${t.english}</div>
+          </div>
+        </div>
+        <div class="examples-row">
+          ${t.examples.map(e => `<span class="example-pill">${e}</span>`).join('')}
+        </div>
+        <div class="interview-block">
+          <div class="interview-label">Interview Q&amp;A</div>
+          <div class="interview-q">${t.iq}</div>
+          <div class="interview-a">${t.ia}</div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+renderCards();
+</script>
+</body>
+</html>
